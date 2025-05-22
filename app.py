@@ -1,7 +1,4 @@
 import streamlit as st
-
-st.title("iBOB Dashboard")
-import streamlit as st
 import tempfile
 import easyocr
 import json
@@ -9,11 +6,9 @@ import re
 from pdf2image import convert_from_path
 import os
 
-# Setup pagina
 st.set_page_config(page_title="iBOB Dashboard", layout="wide")
 st.title("📄 iBOB PDF Analyse")
 
-# Bestand uploaden
 uploaded_file = st.file_uploader("Upload een PDF-bestand", type=["pdf"])
 
 if uploaded_file:
@@ -23,7 +18,6 @@ if uploaded_file:
 
     st.success(f"✅ Bestand '{uploaded_file.name}' ontvangen. OCR wordt uitgevoerd...")
 
-    # OCR uitvoeren op PDF-pagina’s
     reader = easyocr.Reader(['nl', 'en'], gpu=False)
     images = convert_from_path(temp_pdf_path, dpi=200)
     output = []
@@ -66,4 +60,3 @@ if uploaded_file:
         for item in output[:20]:
             st.markdown(f"**Pg {item['pagina']}** — *{item['regel']}*")
             st.markdown(f"`Tags:` {', '.join(item['tags']) if item['tags'] else 'geen'}")
-Update app.py
